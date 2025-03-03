@@ -1,11 +1,11 @@
 const NavBar = () => {
   return (
-    <div className="navbar bg-base-300 shadow-sm sticky">
+    <div className="navbar bg-base-300 shadow-sm sticky px-6">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">🧑🏼‍💻DevTinder</a>
       </div>
       <div className="flex">
-        <div className="dropdown dropdown-end mx-6">
+        <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
