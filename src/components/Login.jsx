@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { addUser } from "../store/slices/userSlice";
+import { BASE_URL, PAGE_ID } from "../utils/constants";
 
 const Login = () => {
   const [clientHeight, setClientHeight] = useState(0);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     try {
@@ -13,7 +17,7 @@ const Login = () => {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       };
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,9 +26,9 @@ const Login = () => {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      console.log(data);
+      dispatch(addUser(data));
       if (response.status === 200) {
-        navigate("/profile");
+        navigate(PAGE_ID.BASE);
       }
     } catch (error) {
       console.error(error);
