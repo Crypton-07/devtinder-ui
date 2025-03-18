@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { addUser } from "../store/slices/userSlice";
 import { BASE_URL, PAGE_ID } from "../utils/constants";
@@ -10,6 +10,8 @@ const Login = () => {
   const passwordRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userData = useSelector((store) => store.user);
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -26,21 +28,29 @@ const Login = () => {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      dispatch(addUser(data));
-      if (response.status === 200) {
+      if (response.ok && response.status === 200) {
+        dispatch(addUser(data));
         navigate(PAGE_ID.BASE);
+      } else {
+        setError(data);
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
+
   useEffect(() => {
     const clientHeight = document.querySelector("#login-card").clientHeight;
     setClientHeight(Math.floor(clientHeight / 3));
+    if (userData) {
+      console.log("Ran again");
+      navigate(PAGE_ID.BASE);
+    }
     return () => {
       setClientHeight(0);
+      setError("");
     };
-  }, []);
+  }, [navigate, userData]);
 
   return (
     <div
@@ -59,6 +69,7 @@ const Login = () => {
               <input
                 ref={emailRef}
                 type="email"
+                defaultValue={"vishesh@gmail.com"}
                 className="input"
                 placeholder="Type here"
               />
@@ -70,11 +81,13 @@ const Login = () => {
               <input
                 ref={passwordRef}
                 type="password"
+                defaultValue={"Luffy@123"}
                 className="input"
                 placeholder="Type here"
               />
             </fieldset>
           </div>
+          <p className="text-red-400">{error}</p>
           <div className="card-actions justify-center my-5">
             <button
               onClick={handleLogin}

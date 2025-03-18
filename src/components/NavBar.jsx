@@ -1,11 +1,32 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router";
+import { BASE_URL, PAGE_ID } from "../utils/constants";
+import { removeUser } from "../store/slices/userSlice";
 
 const NavBar = () => {
   const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/logout`, {
+        credentials: "include",
+        method: "POST",
+      });
+      if (response.ok) {
+        dispatch(removeUser());
+        navigate(PAGE_ID.LOGIN);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="navbar bg-base-300 shadow-sm sticky px-6">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">🧑🏼‍💻DevTinder</a>
+        <Link to={PAGE_ID.BASE} className="btn btn-ghost text-xl">
+          🧑🏼‍💻DevTinder
+        </Link>
       </div>
       {user && (
         <div className="flex items-center gap-4">
@@ -28,16 +49,16 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
+                <Link to={PAGE_ID.PROFILE} className="justify-between">
                   Profile
                   <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link>Settings</Link>
               </li>
               <li>
-                <a>Logout</a>
+                <Link onClick={() => handleLogout()}>Logout</Link>
               </li>
             </ul>
           </div>

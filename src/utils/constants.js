@@ -4,4 +4,9 @@ export const PAGE_ID = {
   PROFILE: "profile",
   LOGIN: "login",
   SIGN_IN: "sign-in",
+  EDIT_PROFILE: "profile/edit",
+};
+
+export const ERROR = {
+  TOKEN_EXPIRED: "TokenExpiredError",
 };
