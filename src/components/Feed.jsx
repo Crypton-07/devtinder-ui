@@ -23,7 +23,7 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center">
+    <div className="flex flex-col gap-10 justify-center items-center mt-4 mb-[12vh]">
       {feedData
         ? feedData.map((data) => <UserCard key={data._id} user={data} />)
         : null}

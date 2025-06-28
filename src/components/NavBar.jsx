@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
-import { BASE_URL, PAGE_ID } from "../utils/constants";
+import { BASE_URL, COMPONENT } from "../utils/constants";
 import { removeUser } from "../store/slices/userSlice";
 
 const NavBar = () => {
@@ -15,7 +15,7 @@ const NavBar = () => {
       });
       if (response.ok) {
         dispatch(removeUser());
-        navigate(PAGE_ID.LOGIN);
+        navigate(COMPONENT.LOGIN);
       }
     } catch (error) {
       console.log(error);
@@ -24,7 +24,7 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-300 shadow-sm sticky px-6">
       <div className="flex-1">
-        <Link to={PAGE_ID.BASE} className="btn btn-ghost text-xl">
+        <Link to={COMPONENT.BASE} className="btn btn-ghost text-xl">
           🧑🏼‍💻DevTinder
         </Link>
       </div>
@@ -47,15 +47,19 @@ const NavBar = () => {
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              onClick={() => document.activeElement.blur()}
             >
               <li>
-                <Link to={PAGE_ID.PROFILE} className="justify-between">
+                <Link to={COMPONENT.PROFILE} className="justify-between">
                   Profile
                   <span className="badge">New</span>
                 </Link>
               </li>
               <li>
-                <Link>Settings</Link>
+                <Link to={COMPONENT.CONNECTIONS}>Connections</Link>
+              </li>
+              <li>
+                <Link to={COMPONENT.REQUESTS}>Requests</Link>
               </li>
               <li>
                 <Link onClick={() => handleLogout()}>Logout</Link>
