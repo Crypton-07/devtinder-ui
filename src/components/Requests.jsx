@@ -5,25 +5,7 @@ import { addRequests } from "../store/slices/requestSlice";
 import RequestCard from "./RequestCard";
 
 const Requests = () => {
-  const dispatch = useDispatch();
   const getConnectionRequests = useSelector((store) => store.requests);
-  const fetchConnectionRequests = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/${PAGE_ID.REQUESTS}`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (response.ok) {
-        const { data } = await response.json();
-        dispatch(addRequests(data));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchConnectionRequests();
-  }, []);
   return (
     <div className="flex flex-col gap-4 items-center justify-center mt-4 mb-[12vh]">
       {getConnectionRequests?.map((request) => (

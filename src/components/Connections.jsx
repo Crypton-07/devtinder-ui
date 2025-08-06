@@ -23,7 +23,7 @@ const Connections = () => {
     }
   };
   useEffect(() => {
-    !connections && fetchConnections();
+    fetchConnections();
   }, []);
   return (
     <div className="flex flex-col gap-4 items-center justify-center mt-4 mb-[12vh]">

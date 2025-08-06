@@ -28,8 +28,8 @@ const RequestCard = ({ request }) => {
       <figure className="p-1">
         <img
           className="p-1 w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover"
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          alt="Shoes"
+          src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          alt="Human"
         />
       </figure>
       <div className="card-body p-2 mx-2">

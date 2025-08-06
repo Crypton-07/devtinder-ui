@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL, PAGE_ID } from "../utils/constants";
 import { setFeedData } from "../store/slices/feedSlice";
 import { useEffect } from "react";
 import UserCard from "./UserCard";
+import { addRequests } from "../store/slices/requestSlice";
 
 const Feed = () => {
   const feedData = useSelector((store) => store.feed);
@@ -17,16 +18,38 @@ const Feed = () => {
       console.log(error);
     }
   };
+
+  const fetchConnectionRequests = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/${PAGE_ID.REQUESTS}`, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (response.ok) {
+        const { data } = await response.json();
+        dispatch(addRequests(data));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchFeed();
+    fetchConnectionRequests();
     return () => {};
   }, []);
 
+  if (!feedData?.length)
+    return (
+      <p className="text-2xl text-center my-4 font-medium tracking-wide">
+        No user found
+      </p>
+    );
+
   return (
-    <div className="flex flex-col gap-10 justify-center items-center mt-4 mb-[12vh]">
-      {feedData
-        ? feedData.map((data) => <UserCard key={data._id} user={data} />)
-        : null}
+    <div className="flex h-[82vh] justify-center items-center">
+      {feedData && feedData.length > 0 && <UserCard user={feedData[0]} />}
     </div>
   );
 };

@@ -7,8 +7,8 @@ const ConnectionCard = ({ user }) => {
       <figure>
         <img
           className="p-2 w-[100px] h-[100px] rounded-full object-cover"
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          alt="Shoes"
+          src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          alt="Human"
         />
       </figure>
       <div className="card-body p-4">
